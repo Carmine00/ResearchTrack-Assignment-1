@@ -53,7 +53,7 @@ def find_token(last_tok, list_tok):
     Function to find the closest token
     
     Args: last_tok (string): identifier for the token type: "silver-token" or "gold-token"
-          list_tok: list with the codes of the token already found
+          list_tok (list of integer values): list with the codes of the token already found
           
     Returns:
 	dist (float): distance of the closest token (-1 if no token is detected) with identifier last_tok and not belonging to list_tok
@@ -85,23 +85,23 @@ while len(list_gold)!=6:
     if dist==-1: # if no token is detected, we make the robot turn 
 	print("I don't see any token!")
 	turn(10, 1)
-    elif dist <d_th: 
-    	""" 
-    	if we are close to the token we have to check two different cases and perform different tasks: 
-    	1)we are simply close to the box and therefore we're looking for a silver one and we can grab it, 
-    	2) we are close to the token plus a certain length, which takes into account the dimension of a silver box
-    	carried by the robot while reaching a gold box, which doesn't need to be grabbed, and the string identifier 
-    	for the token is "gold-token"
-    	"""
+    elif dist <d_th: #if we are simply close to the box, it means we are looking for a silver one and we can grab it
         print("Found it!")
         if R.grab():
 		print("Gotcha!")
         	list_sil.append(val) # add code of the last token found to the silver list
-	        last_tok = "gold-token"
-	        turn(-20,2) 
+	        last_tok = "gold-token" # change the flag
+	        turn(-20,2) # set a fixed turning for the robot to move and pair boxes clockwise
 	else:
 		print("Aww, I'm not close enough.")      	
     elif dist <d_th+0.20 and last_tok == "gold-token": 
+    	""" 
+    	if we are close to the token plus a certain length and the flag is set to "gold-token", this means the robot is close 
+    	to the gold box but it is carrying a silver one which adds its own length to the distance quantified by the robot
+    	to reach the box; (the actual size of the box is 0.16 but the margin that was chosen is slightly higher, equal to 0.20, 
+    	to ensure a safety distance when approaching and pairing the boxes) in this case we do not have to grab the gold box 
+    	but simply release the silver one
+    	"""
         list_gold.append(val) # add code of the last token found to the gold list
         R.release()
         drive(-25,2) # go back with respect to the last pair of boxes paired
@@ -116,7 +116,7 @@ while len(list_gold)!=6:
     elif rot_y > a_th:
         print("Right a bit...")
         turn(+2, 0.5) 
-# when exiting the while loop, the list of gold token is full and the task has been achieved
+# if the while loop is exited, the list of gold token is full and the task has been achieved
 print("Task achieved!")
 exit()
 	
