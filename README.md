@@ -86,15 +86,17 @@ while list of golden boxes paired not full
 		look for box with silver flag and silver list
 	else:
 		look for token with gold flag and gold list
-	if distance obtained when searching equat to -1:
+	if distance obtained when searching equal to -1:
 		token not in the robot's vision, turn to change the field view
 	else if distance less than the threshold :
-		grab the box and add its code to the silver list 
+		grab the box, rotate left to set a clockwise direction to pair 
+		boxes and add its code to the silver list 
 	else if distance less than the threshold and the dimension of the box and flag set to gold:
 		we are carrying a silver box and we are close to golden box, 
 		release silver box and add the code of the golden one to the list, 
 		then go back to not be too close to the new pair and rotate right
-		to set a clockwise direction to pair boxes
+		to set a clockwise direction to pair boxes and counterbalance the
+		rotation made to reach and grab the silver box
 	else if the robot is well aligned to the token:
 		drive towards the token
 	else if the robot is not well aligned to the token:
@@ -104,9 +106,9 @@ End, task achieved!
 ### Possible improvements ###
 A possible adjustment could be to improve the robot's vision, in order to enlarge the field view
 and avoid turning multiple times when the token are close to the robot.
-If the boxes in the enviroment were not well ordered like in the analyzed scenario, a more sophisticated 
-algortihm could be implemented in order to avoid collisions with boxes along the path of the robot;
-in this case a simpler approach was preferred so as to achieve the task in the easiest way.
+If the boxes in the enviroment were not supposed to be well displaced like in the analyzed scenario, a more sophisticated 
+algortihm could have been implemented in order to avoid collisions with boxes along the path of the robot; in this 
+case a simpler approach was preferred so as to achieve the task in the easiest way.
 	
 		
 		

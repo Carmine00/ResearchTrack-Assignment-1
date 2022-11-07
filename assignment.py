@@ -10,6 +10,9 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
+N_tok = 6
+""" number of token for each type in the enviroment"""
+
 last_tok = "silver-token"
 """ string flag to let the robot know which token has to look for, initialized to silver"""
 
@@ -56,7 +59,7 @@ def find_token(last_tok, list_tok):
           list_tok (list of integer values): list with the codes of the token already found
           
     Returns:
-	dist (float): distance of the closest token (-1 if no token is detected) with identifier last_tok and not belonging to list_tok
+	dist (float): distance of the closest token with identifier last_tok and not belonging to list_tok (-1 if no token is detected) 
 	rot_y (float): angle between the robot and the token (-1 if no token is detected)
 	val (int): integer code associated to each token (-1 if no new token is detected)
     """
@@ -76,8 +79,9 @@ def find_token(last_tok, list_tok):
     else:
    	return dist, rot_y, val  	  
 
+
 # while the list of golden tokens paired is not full, keep pairing and searching for boxes 
-while len(list_gold)!=6:
+while len(list_gold)!=N_tok:
     if last_tok == "silver-token": # if last_tok is equal to "silver-token", then we look for a silver token, otherwise for a golden one
 	dist, rot_y, val = find_token(last_tok, list_sil)
     else:
@@ -96,17 +100,18 @@ while len(list_gold)!=6:
 		print("Aww, I'm not close enough.")      	
     elif dist <d_th+0.20 and last_tok == "gold-token": 
     	""" 
-    	if we are close to the token plus a certain length and the flag is set to "gold-token", this means the robot is close 
-    	to the gold box but it is carrying a silver one which adds its own length to the distance quantified by the robot
-    	to reach the box; (the actual size of the box is 0.16 but the margin that was chosen is slightly higher, equal to 0.20, 
-    	to ensure a safety distance when approaching and pairing the boxes) in this case we do not have to grab the gold box 
-    	but simply release the silver one
+    	since the robot's perception of the boxes changes whether we are carrying a box or not, if we are close to the token 
+    	plus a certain length and the flag is set to "gold-token", this means the robot is close to the gold box but it is carrying 
+    	a silver one which adds its own length to the distance quantified by the robot to reach the box; 
+    	(the actual size of the box is 0.16 but the margin that was chosen is slightly higher, equal to 0.20, to ensure a safety 
+    	distance when approaching and pairing the boxes) in this case we do not have to grab the gold box but simply release the silver one
     	"""
         list_gold.append(val) # add code of the last token found to the gold list
         R.release()
         drive(-25,2) # go back with respect to the last pair of boxes paired
         turn(20,2) # when pairing we turned left, so to counter balance that rotation we now turn right
-        last_tok = "silver-token" 
+        last_tok = "silver-token"
+        alfa -=3 
     elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the token, we go forward
 	print("Proceeding...")
         drive(30, 0.5)
