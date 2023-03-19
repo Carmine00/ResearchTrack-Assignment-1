@@ -1,7 +1,7 @@
 Python Robotics Simulator
 ================================
 
-This is a simple, portable robot simulator developed by [Student Robotics](https://studentrobotics.org).
+Python application developed that at the University of Genoa in the academic year 2022/2023 during the Research Track I course, the aim of the project is to solve the concurrency problem for a mobile holonomic robot that matches boxes in a simulator developed by [Student Robotics](https://studentrobotics.org) 
 
 Installing and running
 ----------------------
