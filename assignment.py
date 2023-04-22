@@ -111,7 +111,6 @@ while len(list_gold)!=N_tok:
         drive(-25,2) # go back with respect to the last pair of boxes paired
         turn(20,2) # when pairing we turned left, so to counter balance that rotation we now turn right
         last_tok = "silver-token"
-        alfa -=3 
     elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the token, we go forward
 	print("Proceeding...")
         drive(30, 0.5)
