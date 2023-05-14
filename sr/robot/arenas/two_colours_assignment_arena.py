@@ -8,12 +8,13 @@ from pygame.rect import Rect
 from arena import ARENA_MARKINGS_COLOR, ARENA_MARKINGS_WIDTH, Arena
 from ..markers import Token
 from ..vision import MARKER_TOKEN_GOLD, MARKER_TOKEN_SILVER
+import random
 
 HOME_ZONE_SIZE = 2.5
 
 INNER_CIRCLE_RADIUS = 0.9
 OUTER_CIRCLE_RADIUS = 2.4  # Some tokens are at 1200ish, others at 1270ish
-TOKENS_PER_CIRCLE = 6
+TOKENS_PER_CIRCLE = 4
 PEDESTAL_COLOR = (0x80, 0x80, 0x80)
 
 
@@ -63,8 +64,8 @@ class TwoColoursAssignmentArena(Arena):
                     token_type = GoldToken
                     rotation_amount = 0
                 token = token_type(self, number_offset + i)
-                angle = angle_offset + (2 * pi / TOKENS_PER_CIRCLE) * i
-                token.location = (cos(angle) * radius, sin(angle) * radius)
+                #angle = angle_offset + (1.85 * pi / TOKENS_PER_CIRCLE) * i
+                token.location = (random.uniform(-2.5,2.5), random.uniform(-2.5,2.5))
                 token.heading = rotation_amount
                 self.objects.append(token)
 

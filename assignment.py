@@ -3,6 +3,7 @@ from __future__ import print_function
 import time
 from sr.robot import *
 
+start = time.time()
 
 a_th = 2.0
 """ float: Threshold for the control of the linear distance"""
@@ -10,7 +11,7 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
-N_tok = 6
+N_tok = 4
 """ number of token for each type in the enviroment"""
 
 last_tok = "silver-token"
@@ -121,6 +122,7 @@ while len(list_gold)!=N_tok:
         print("Right a bit...")
         turn(+2, 0.5) 
 # if the while loop is exited, the list of gold token is full and the task has been achieved
-print("Task achieved!")
+end = time.time()
+print("Task achieved! Time elapsed: "+ str(end - start))
 exit()
 	
